@@ -1,67 +1,126 @@
 <template>
     <div>
-            <h1>Lays Chips Configurator</h1>
         
-            <ColorPicker
-            :colors="colors"
-            @select="(color) => {
-                config.color = color
-                sendColorToThree(color)
-            }"
-            />
-        
-            <p v-if="config.color">
-                Selected color: {{ config.color.name }}
-            </p>
-        
-            <FontPicker
-                :fonts="fonts"
-                @select="config.font = $event"
-            />
-        
-            <p v-if="config.font">
-                Selected font: {{ config.font.name }}
-            </p>
-
-            <h3>Title</h3>
-
-            <input
-            type="text"
-            placeholder="Type your flavor name"
-            v-model="config.title"
-            @input="sendTitleToThree(config.title)"
-            />
-
-            <p v-if="config.title">
-            Title: {{ config.title }}
-            </p>
-
-            <hr />
-
-            <h3>Current config (debug)</h3>
-            <pre>{{ config }}</pre>
-            </div>
-            <hr />
-
-        <h3>3D Preview</h3>
-
-        <iframe
+      <h1>Lays Chips Configurator</h1>
+      <div class="progress">
+        <div
+            v-for="step in 4"
+            :key="step"
+            class="progress-step"
+            :class="{ active: currentStep >= step }"
+        >
+            {{ step }}
+        </div>
+    </div>
+  
+      <!-- STEP 1 -->
+      <div v-if="currentStep === 1" class="step">
+        <h2>Choose a color</h2>
+  
+        <input type="color" v-model="config.color" />
+  
+        <button
+          class="next"
+          :disabled="!config.color"
+          @click="nextStep"
+        >
+          Next
+        </button>
+      </div>
+  
+      <!-- STEP 2 -->
+      <div v-if="currentStep === 2" class="step">
+        <h2>Name your flavor</h2>
+  
+        <input
+          type="text"
+          placeholder="e.g. Sweet Chili"
+          v-model="config.title"
+        />
+  
+        <div class="nav">
+          <button @click="prevStep">Back</button>
+          <button
+            :disabled="!config.title"
+            @click="nextStep"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+  
+      <!-- STEP 3 -->
+      <div v-if="currentStep === 3" class="step">
+        <h2>Pick a font</h2>
+  
+        <div class="fonts">
+          <button
+            v-for="font in fonts"
+            :key="font._id"
+            @click="config.font = font"
+            :style="{ fontFamily: font.name }"
+            :class="{ active: config.font === font }"
+          >
+            {{ font.name }}
+          </button>
+        </div>
+  
+        <div class="nav">
+          <button @click="prevStep">Back</button>
+          <button
+            :disabled="!config.font"
+            @click="nextStep"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+  
+      <!-- STEP 4 -->
+      <div v-if="currentStep === 4" class="step">
+        <h2>Your design</h2>
+  
+        <p><strong>Color:</strong> {{ config.color }}</p>
+        <p><strong>Title:</strong> {{ config.title }}</p>
+        <p><strong>Font:</strong> {{ config.font.name }}</p>
+  
+        <div class="nav">
+          <button @click="prevStep">Back</button>
+          <button class="save" @click="saveDesign">
+            Save design
+          </button>
+        </div>
+      </div>
+  
+      <!-- PREVIEW -->
+      <h3>3D Preview</h3>
+  
+      <iframe
         ref="threeFrame"
         src="http://localhost:5174"
         style="width: 100%; height: 400px; border: none;"
-        ></iframe>
-
-        <button @click="saveDesign">
-  Save design
-</button>
+      ></iframe>
+    </div>
   </template>
   
   <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { getColors, getFonts } from '../services/api'
 
-import ColorPicker from '../components/ColorPicker.vue'
-import FontPicker from '../components/FontPicker.vue'
+
+const currentStep = ref(1)
+
+function nextStep() {
+  if (currentStep.value < 4) {
+    currentStep.value++
+  }
+}
+
+function prevStep() {
+  if (currentStep.value > 1) {
+    currentStep.value--
+  }
+}
 
 const colors = ref([])
 const fonts = ref([])
@@ -74,29 +133,44 @@ const config = ref({
 
 const threeFrame = ref(null)
 
-function sendColorToThree(color) {
-  if (!threeFrame.value) return
+watch(
+  () => config.value.color,
+  (newColor) => {
+    if (!threeFrame.value || !newColor) return
 
-  threeFrame.value.contentWindow.postMessage(
-    {
-      type: 'SET_COLOR',
-      color: color.value
-    },
-    '*'
-  )
-}
+    threeFrame.value.contentWindow.postMessage(
+      { type: 'SET_COLOR', color: newColor },
+      '*'
+    )
+  }
+)
 
-function sendTitleToThree(title) {
-  if (!threeFrame.value) return
+watch(
+  () => config.value.title,
+  (newTitle) => {
+    if (!threeFrame.value || !newTitle) return
 
-  threeFrame.value.contentWindow.postMessage(
-    {
-      type: 'SET_TITLE',
-      title: title
-    },
-    '*'
-  )
-}
+    threeFrame.value.contentWindow.postMessage(
+      { type: 'SET_TITLE', title: newTitle },
+      '*'
+    )
+  }
+)
+
+watch(
+  () => config.value.font,
+  (newFont) => {
+    if (!threeFrame.value || !newFont) return
+
+    threeFrame.value.contentWindow.postMessage(
+      { type: 'SET_FONT', font: newFont.name },
+      '*'
+    )
+  }
+)
+
+
+
 
 async function saveDesign() {
   const payload = {
@@ -128,3 +202,4 @@ onMounted(async () => {
   fonts.value = await getFonts()
 })
   </script>
+
