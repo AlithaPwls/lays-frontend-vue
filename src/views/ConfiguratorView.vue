@@ -29,6 +29,7 @@
             type="text"
             placeholder="Type your flavor name"
             v-model="config.title"
+            @input="sendTitleToThree(config.title)"
             />
 
             <p v-if="config.title">
@@ -76,6 +77,18 @@ function sendColorToThree(color) {
     {
       type: 'SET_COLOR',
       color: color.value
+    },
+    '*'
+  )
+}
+
+function sendTitleToThree(title) {
+  if (!threeFrame.value) return
+
+  threeFrame.value.contentWindow.postMessage(
+    {
+      type: 'SET_TITLE',
+      title: title
     },
     '*'
   )
