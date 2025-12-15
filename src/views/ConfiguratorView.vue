@@ -1,24 +1,41 @@
 <template>
     <div>
-      <h1>Lays Chips Configurator</h1>
-  
-      <ColorPicker
-        :colors="colors"
-        @select="selectedColor = $event"
-      />
-  
-      <p v-if="selectedColor">
-        Selected color: {{ selectedColor.name }}
-      </p>
-  
-      <FontPicker
-        :fonts="fonts"
-        @select="selectedFont = $event"
-      />
-  
-      <p v-if="selectedFont">
-        Selected font: {{ selectedFont.name }}
-      </p>
+            <h1>Lays Chips Configurator</h1>
+        
+            <ColorPicker
+                :colors="colors"
+                @select="config.color = $event"
+            />
+        
+            <p v-if="config.color">
+                Selected color: {{ config.color.name }}
+            </p>
+        
+            <FontPicker
+                :fonts="fonts"
+                @select="config.font = $event"
+            />
+        
+            <p v-if="config.font">
+                Selected font: {{ config.font.name }}
+            </p>
+
+            <h3>Title</h3>
+
+            <input
+            type="text"
+            placeholder="Type your flavor name"
+            v-model="config.title"
+            />
+
+            <p v-if="config.title">
+            Title: {{ config.title }}
+            </p>
+
+            <hr />
+
+            <h3>Current config (debug)</h3>
+            <pre>{{ config }}</pre>
     </div>
   </template>
   
@@ -32,8 +49,11 @@ import FontPicker from '../components/FontPicker.vue'
 const colors = ref([])
 const fonts = ref([])
 
-const selectedColor = ref(null)
-const selectedFont = ref(null)
+const config = ref({
+  color: null,
+  font: null,
+  title: ''
+})
 
 onMounted(async () => {
   colors.value = await getColors()
