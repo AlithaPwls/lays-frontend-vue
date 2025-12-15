@@ -1,5 +1,8 @@
 import { createApp } from 'vue'
-import ConfiguratorView from './views/ConfiguratorView.vue'
+import App from './App.vue'
+import router from './router'
 import './style.css'
 
-createApp(ConfiguratorView).mount('#app')
+createApp(App)
+  .use(router)
+  .mount('#app')

@@ -1,5 +1,11 @@
-<template>
+
+  <template>
     <div>
+
+        <router-link to="/designs">
+    View all designs
+  </router-link>
+  
         
       <h1>Lays Chips Configurator</h1>
       <div class="progress">
