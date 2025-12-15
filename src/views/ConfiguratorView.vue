@@ -40,6 +40,9 @@
   
         <div class="nav">
           <button @click="prevStep">Back</button>
+          <button class="reset" @click="resetConfigurator">
+            Start over
+        </button>
           <button
             :disabled="!config.title"
             @click="nextStep"
@@ -63,10 +66,13 @@
           >
             {{ font.name }}
           </button>
+          
         </div>
   
         <div class="nav">
-          <button @click="prevStep">Back</button>
+          <button @click="prevStep">Back</button>        <button class="reset" @click="resetConfigurator">
+            Start over
+        </button>
           <button
             :disabled="!config.font"
             @click="nextStep"
@@ -85,10 +91,15 @@
         <p><strong>Font:</strong> {{ config.font.name }}</p>
   
         <div class="nav">
-          <button @click="prevStep">Back</button>
-          <button class="save" @click="saveDesign">
+        <button @click="prevStep">Back</button>
+
+        <button class="reset" @click="resetConfigurator">
+            Start over
+        </button>
+
+        <button class="save" @click="saveDesign">
             Save design
-          </button>
+        </button>
         </div>
       </div>
   
@@ -100,7 +111,10 @@
         src="http://localhost:5174"
         style="width: 100%; height: 400px; border: none;"
       ></iframe>
+
+      
     </div>
+    
   </template>
   
   <script setup>
@@ -119,6 +133,26 @@ function nextStep() {
 function prevStep() {
   if (currentStep.value > 1) {
     currentStep.value--
+  }
+}
+
+function resetConfigurator() {
+  // terug naar stap 1
+  currentStep.value = 1
+
+  // config resetten
+  config.value = {
+    color: null,
+    title: '',
+    font: null
+  }
+
+  // Three.js resetten
+  if (threeFrame.value) {
+    threeFrame.value.contentWindow.postMessage(
+      { type: 'RESET' },
+      '*'
+    )
   }
 }
 
