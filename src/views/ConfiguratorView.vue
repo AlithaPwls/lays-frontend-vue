@@ -3,8 +3,11 @@
             <h1>Lays Chips Configurator</h1>
         
             <ColorPicker
-                :colors="colors"
-                @select="config.color = $event"
+            :colors="colors"
+            @select="(color) => {
+                config.color = color
+                sendColorToThree(color)
+            }"
             />
         
             <p v-if="config.color">
@@ -36,7 +39,16 @@
 
             <h3>Current config (debug)</h3>
             <pre>{{ config }}</pre>
-    </div>
+            </div>
+            <hr />
+
+        <h3>3D Preview</h3>
+
+        <iframe
+        ref="threeFrame"
+        src="http://localhost:5174"
+        style="width: 100%; height: 400px; border: none;"
+        ></iframe>
   </template>
   
   <script setup>
@@ -54,6 +66,20 @@ const config = ref({
   font: null,
   title: ''
 })
+
+const threeFrame = ref(null)
+
+function sendColorToThree(color) {
+  if (!threeFrame.value) return
+
+  threeFrame.value.contentWindow.postMessage(
+    {
+      type: 'SET_COLOR',
+      color: color.value
+    },
+    '*'
+  )
+}
 
 onMounted(async () => {
   colors.value = await getColors()
