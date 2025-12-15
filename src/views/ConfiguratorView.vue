@@ -50,6 +50,10 @@
         src="http://localhost:5174"
         style="width: 100%; height: 400px; border: none;"
         ></iframe>
+
+        <button @click="saveDesign">
+  Save design
+</button>
   </template>
   
   <script setup>
@@ -92,6 +96,31 @@ function sendTitleToThree(title) {
     },
     '*'
   )
+}
+
+async function saveDesign() {
+  const payload = {
+    title: config.value.title,
+    color: typeof config.value.color === 'object'
+      ? config.value.color.value
+      : config.value.color,
+    font: typeof config.value.font === 'object'
+      ? config.value.font.name
+      : config.value.font
+  }
+
+  console.log('SENDING TO API:', payload)
+
+  const response = await fetch('http://localhost:3000/designs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+
+  const data = await response.json()
+  console.log('Saved design:', data)
 }
 
 onMounted(async () => {
