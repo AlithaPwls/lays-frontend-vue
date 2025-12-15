@@ -20,11 +20,18 @@
           :key="design._id"
           class="design-card"
         >
-          <div
-            class="color-preview"
-            :style="{ backgroundColor: design.color }"
-          ></div>
-  
+        <div class="design-image-wrapper">
+        <img
+            v-if="design.image"
+            :src="design.image"
+            class="design-image"
+        />
+        </div>
+
+        <p style="font-size:10px; word-break:break-all;">
+        {{ design.image.slice(0, 40) }}
+        </p>
+            
           <h3
             class="design-title"
             :style="{ fontFamily: design.font }"
@@ -39,3 +46,21 @@
       </div>
     </div>
   </template>
+
+<script setup>
+    import { ref, onMounted } from 'vue'
+    
+    const designs = ref([])     // 👈 BELANGRIJK
+    const loading = ref(true)
+    
+    onMounted(async () => {
+      try {
+        const res = await fetch('http://localhost:3000/designs')
+        designs.value = await res.json()
+      } catch (error) {
+        console.error('Error loading designs:', error)
+      } finally {
+        loading.value = false
+      }
+    })
+    </script>
