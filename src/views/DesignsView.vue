@@ -27,10 +27,6 @@
             class="design-image"
         />
         </div>
-
-        <p style="font-size:10px; word-break:break-all;">
-        {{ design.image.slice(0, 40) }}
-        </p>
             
           <h3
             class="design-title"
@@ -54,13 +50,31 @@
     const loading = ref(true)
     
     onMounted(async () => {
-      try {
-        const res = await fetch('http://localhost:3000/designs')
-        designs.value = await res.json()
-      } catch (error) {
-        console.error('Error loading designs:', error)
-      } finally {
-        loading.value = false
+  try {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      window.location.href = '/login'
+      return
+    }
+
+    const res = await fetch('http://localhost:3000/designs', {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     })
+
+    if (res.status === 401) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
+      return
+    }
+
+    designs.value = await res.json()
+  } catch (error) {
+    console.error('Error loading designs:', error)
+  } finally {
+    loading.value = false
+  }
+})
     </script>

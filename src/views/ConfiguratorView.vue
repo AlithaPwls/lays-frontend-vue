@@ -71,13 +71,36 @@
         style="width: 100%; height: 400px; border: none;"
         @load="iframeReady = true"
       ></iframe>
+
+      <div v-if="showAuthModal" class="auth-modal-overlay">
+  <div class="auth-modal">
+    <h2>Login required</h2>
+    <p>To save your design, please log in or register.</p>
+
+    <div class="auth-actions">
+      <router-link to="/login" class="btn primary">
+        Login
+      </router-link>
+
+      <router-link to="/register" class="btn secondary">
+        Register
+      </router-link>
+    </div>
+
+    <button class="close" @click="showAuthModal = false">
+      Cancel
+    </button>
+  </div>
+</div>
     </div>
   </template>
   
   <script setup>
   import { ref, watch, onMounted } from 'vue'
   import { getFonts } from '../services/api'
-  
+
+
+  const showAuthModal = ref(false)
   const currentStep = ref(1)
   const fonts = ref([])
   const threeFrame = ref(null)
@@ -147,15 +170,23 @@
   )
   
   function saveDesign() {
-    if (!iframeReady.value || !threeFrame.value) return
-    pendingSave.value = true
-    screenshot.value = null
-  
-    threeFrame.value.contentWindow.postMessage(
-      { type: 'GET_SCREENSHOT' },
-      '*'
-    )
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    showAuthModal.value = true
+    return
   }
+
+  if (!iframeReady.value || !threeFrame.value) return
+
+  pendingSave.value = true
+  screenshot.value = null
+
+  threeFrame.value.contentWindow.postMessage(
+    { type: 'GET_SCREENSHOT' },
+    '*'
+  )
+}
   
   window.addEventListener('message', async (event) => {
     console.log("saved")
