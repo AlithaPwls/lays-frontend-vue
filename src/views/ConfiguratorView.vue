@@ -188,31 +188,42 @@
   )
 }
   
-  window.addEventListener('message', async (event) => {
-    console.log("saved")
-    if (event.data?.type !== 'SCREENSHOT_RESULT') return
-    if (!pendingSave.value) return
-  
-    pendingSave.value = false
-    screenshot.value = event.data.image
-  
-    const payload = {
-      title: config.value.title,
-      color: config.value.color,
-      font: config.value.font.name,
-      image: screenshot.value
-    }
-  
-    const res = await fetch('http://localhost:3000/designs', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-  
-    await res.json()
-    window.alert('Design saved!')
-    window.location.href = '/designs';
+window.addEventListener('message', async (event) => {
+  if (event.data?.type !== 'SCREENSHOT_RESULT') return
+  if (!pendingSave.value) return
+
+  pendingSave.value = false
+  screenshot.value = event.data.image
+
+  const token = localStorage.getItem('token')
+
+  const payload = {
+    title: config.value.title,
+    color: config.value.color,
+    font: config.value.font.name,
+    image: screenshot.value
+  }
+
+  const res = await fetch('http://localhost:3000/designs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
   })
+  
+  if (!res.ok) {
+  const errorText = await res.text()
+  console.error('SAVE FAILED:', res.status, errorText)
+  alert(`Saving failed (${res.status})`)
+  return
+}
+
+  await res.json()
+  alert('Design saved!')
+  window.location.href = '/designs'
+})
   
   onMounted(async () => {
     fonts.value = await getFonts()

@@ -1,22 +1,36 @@
 <template>
-    <div>
-      <h1>Login</h1>
+    <div class="auth-wrapper">
+      <div class="auth-card">
+        <h1>Welcome back</h1>
+        <p class="auth-subtitle">
+          Log in to save and manage your designs
+        </p>
   
-      <input
-        type="email"
-        placeholder="Email"
-        v-model="email"
-      />
+        <input
+          type="email"
+          placeholder="Email address"
+          v-model="email"
+        />
   
-      <input
-        type="password"
-        placeholder="Password"
-        v-model="password"
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          v-model="password"
+        />
   
-      <button @click="login">Login</button>
+        <button class="primary" @click="login">
+          Log in
+        </button>
   
-      <p v-if="error">{{ error }}</p>
+        <p v-if="error" class="auth-error">
+          {{ error }}
+        </p>
+  
+        <p class="auth-switch">
+          Don’t have an account?
+          <router-link to="/register">Create one</router-link>
+        </p>
+      </div>
     </div>
   </template>
   
