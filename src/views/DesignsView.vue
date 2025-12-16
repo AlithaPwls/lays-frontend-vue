@@ -38,6 +38,14 @@
           <p class="design-font">
             {{ design.font }}
           </p>
+
+          <button
+  class="like-button"
+  :disabled="isOwnDesign(design) || hasLiked(design)"
+  @click="likeDesign(design)"
+>
+  ❤️ {{ design.likes.length }}
+</button>
         </div>
       </div>
     </div>
@@ -77,4 +85,45 @@
     loading.value = false
   }
 })
+
+function getCurrentUser() {
+  const user = localStorage.getItem('user')
+  return user ? JSON.parse(user) : null
+}
+
+function isOwnDesign(design) {
+  const user = getCurrentUser()
+  return user && design.userId === user.id
+}
+
+function hasLiked(design) {
+  const user = getCurrentUser()
+  if (!user) return false
+  return design.likes.includes(user.id)
+}
+
+async function likeDesign(design) {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    alert('Login required to like designs')
+    return
+  }
+
+  const res = await fetch(
+    `http://localhost:3000/designs/${design._id}/like`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )
+
+  if (!res.ok) {
+    return
+  }
+
+  // frontend state updaten
+  design.likes.push('temp') // dummy push om UI te refreshen
+}
     </script>
