@@ -212,11 +212,12 @@ window.addEventListener('message', async (event) => {
     },
     body: JSON.stringify(payload)
   })
-  
+
   if (!res.ok) {
   const errorText = await res.text()
   console.error('SAVE FAILED:', res.status, errorText)
-  alert(`Saving failed (${res.status})`)
+  alert(`Saving failed. Please login or register to save your design. (${res.status})`)
+  window.location.href = '/login'
   return
 }
 

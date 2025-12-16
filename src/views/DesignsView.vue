@@ -20,6 +20,9 @@
           :key="design._id"
           class="design-card"
         >
+
+
+
         <div class="design-image-wrapper">
         <img
             v-if="design.image"
@@ -36,9 +39,8 @@
           </h3>
   
           <p class="design-font">
-            {{ design.font }}
-          </p>
-
+        {{ design.userId.email }}
+        </p>
           <button
   class="like-button"
   :disabled="isOwnDesign(design) || hasLiked(design)"
@@ -46,6 +48,14 @@
 >
   ❤️ {{ design.likes.length }}
 </button>
+
+<button
+            v-if="isAdmin()"
+            class="delete-button"
+            @click="deleteDesign(design._id)"
+            >
+            🗑 Delete
+            </button>
         </div>
       </div>
     </div>
@@ -86,6 +96,11 @@
   }
 })
 
+function isAdmin() {
+  const user = localStorage.getItem('user')
+  return user ? JSON.parse(user).isAdmin : false
+}
+
 function getCurrentUser() {
   const user = localStorage.getItem('user')
   return user ? JSON.parse(user) : null
@@ -93,8 +108,10 @@ function getCurrentUser() {
 
 function isOwnDesign(design) {
   const user = getCurrentUser()
-  return user && design.userId === user.id
+  return user && design.userId?._id === user.id
+
 }
+
 
 function hasLiked(design) {
   const user = getCurrentUser()
@@ -125,5 +142,33 @@ async function likeDesign(design) {
 
   // frontend state updaten
   design.likes.push('temp') // dummy push om UI te refreshen
+}
+
+async function deleteDesign(designId) {
+  const token = localStorage.getItem('token')
+  if (!token) return
+
+  const confirmed = confirm('Are you sure you want to delete this design?')
+  if (!confirmed) return
+
+  const res = await fetch(
+    `http://localhost:3000/designs/${designId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )
+
+  if (!res.ok) {
+    alert('Delete failed')
+    return
+  }
+
+  // UI updaten
+  designs.value = designs.value.filter(
+    d => d._id !== designId
+  )
 }
     </script>
