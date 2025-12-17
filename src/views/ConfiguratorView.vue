@@ -1,100 +1,107 @@
 <template>
-    <div>
-      <router-link to="/designs">View all designs</router-link>
+    <div class="fullconfig">
   
-      <h1>Lays Chips Configurator</h1>
+      <!-- HEADER -->
+      <header class="config-header">
+        <router-link to="/designs" class="top-link">
+          View all designs
+        </router-link>
   
-      <div class="progress">
-        <div
-          v-for="step in 4"
-          :key="step"
-          class="progress-step"
-          :class="{ active: currentStep >= step }"
-        >
-          {{ step }}
-        </div>
-      </div>
+        <h1 class="config-title">Lays Chips Configurator</h1>
+      </header>
   
-      <div v-if="currentStep === 1" class="step">
-        <h2>Choose a color</h2>
-        <input type="color" v-model="config.color" />
-        <button :disabled="!config.color" @click="nextStep">Next</button>
-      </div>
-  
-      <div v-if="currentStep === 2" class="step">
-        <h2>Name your flavor</h2>
-        <input type="text" v-model="config.title" />
-        <div class="nav">
-          <button @click="prevStep">Back</button>
-          <button @click="resetConfigurator">Start over</button>
-          <button :disabled="!config.title" @click="nextStep">Next</button>
-        </div>
-      </div>
-  
-      <div v-if="currentStep === 3" class="step">
-        <h2>Pick a font</h2>
-        <div class="fonts">
-          <button
-            v-for="font in fonts"
-            :key="font._id"
-            @click="config.font = font"
-            :style="{ fontFamily: font.name }"
-            :class="{ active: config.font === font }"
+      <!-- PROGRESS (LOS) -->
+      <div class="progress-wrapper">
+        <div class="progress">
+          <div
+            v-for="step in 4"
+            :key="step"
+            class="progress-step"
+            :class="{ active: currentStep >= step }"
           >
-            {{ font.name }}
-          </button>
-        </div>
-        <div class="nav">
-          <button @click="prevStep">Back</button>
-          <button @click="resetConfigurator">Start over</button>
-          <button :disabled="!config.font" @click="nextStep">Next</button>
+            {{ step }}
+          </div>
         </div>
       </div>
   
-      <div v-if="currentStep === 4" class="step">
-        <h2>Your design</h2>
-        <p><strong>Color:</strong> {{ config.color }}</p>
-        <p><strong>Title:</strong> {{ config.title }}</p>
-        <p><strong>Font:</strong> {{ config.font.name }}</p>
-        <div class="nav">
-          <button @click="prevStep">Back</button>
-          <button @click="resetConfigurator">Start over</button>
-          <button @click="saveDesign">Save design</button>
+      <!-- MAIN CONTENT -->
+      <div class="config-content">
+  
+        <!-- LEFT -->
+        <div class="preview-column">
+          <iframe
+            ref="threeFrame"
+            src="http://localhost:5174"
+            class="preview-iframe"
+            @load="iframeReady = true"
+          ></iframe>
+        </div>
+  
+        <!-- RIGHT -->
+        <div class="inputs-column">
+  
+          <div v-if="currentStep === 1" class="step">
+            <h2>Choose a color</h2>
+            <input type="color" v-model="config.color" />
+            <button :disabled="!config.color" @click="nextStep">
+              Next
+            </button>
+          </div>
+  
+          <div v-if="currentStep === 2" class="step">
+            <h2>Name your flavor</h2>
+            <input type="text" v-model="config.title" />
+  
+            <div class="nav">
+              <button @click="prevStep">← Back</button>
+              <button :disabled="!config.title" @click="nextStep">Next →</button>
+              <button @click="resetConfigurator">Reset ↺</button>
+            </div>
+          </div>
+  
+          <div v-if="currentStep === 3" class="step">
+            <h2>Pick a font</h2>
+  
+            <div class="fonts">
+              <button
+                v-for="font in fonts"
+                :key="font._id"
+                @click="config.font = font"
+                :style="{ fontFamily: font.name }"
+                :class="{ active: config.font === font }"
+              >
+                {{ font.name }}
+              </button>
+            </div>
+  
+            <div class="nav">
+              <button @click="prevStep">← Back</button>
+              <button :disabled="!config.title" @click="nextStep">Next →</button>
+              <button @click="resetConfigurator">Reset ↺</button>
+            </div>
+          </div>
+  
+          <div v-if="currentStep === 4" class="step">
+            <h2>Your design</h2>
+  
+            <p><strong>Color:</strong> {{ config.color }}</p>
+            <p><strong>Title:</strong> {{ config.title }}</p>
+            <p><strong>Font:</strong> {{ config.font.name }}</p>
+  
+            <div class="nav">
+                <button @click="prevStep">← Back</button>
+                <button @click="resetConfigurator">Reset ↺</button>
+              <button @click="saveDesign">Save design ✓</button>
+            </div>
+          </div>
+  
         </div>
       </div>
   
-      <h3>3D Preview</h3>
-  
-      <iframe
-        ref="threeFrame"
-        src="http://localhost:5174"
-        style="width: 100%; height: 400px; border: none;"
-        @load="iframeReady = true"
-      ></iframe>
-
-      <div v-if="showAuthModal" class="auth-modal-overlay">
-  <div class="auth-modal">
-    <h2>Login required</h2>
-    <p>To save your design, please log in or register.</p>
-
-    <div class="auth-actions">
-      <router-link to="/login" class="btn primary">
-        Login
-      </router-link>
-
-      <router-link to="/register" class="btn secondary">
-        Register
-      </router-link>
-    </div>
-
-    <button class="close" @click="showAuthModal = false">
-      Cancel
-    </button>
-  </div>
-</div>
     </div>
   </template>
-  
+
+
   <script setup>
   import { ref, watch, onMounted } from 'vue'
   import { getFonts } from '../services/api'

@@ -1,0 +1,140 @@
+/* ===============================
+   DESIGNS PAGE (SEPARATE STYLES)
+   =============================== */
+
+   .designs-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .designs-page h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Back link */
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: #111;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Status text */
+  .status {
+    text-align: center;
+    margin-top: 3rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  
+  /* Grid */
+  .designs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  /* Card */
+  .design-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .design-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Image */
+  .design-image-wrapper {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #f4f4f4, #eaeaea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .design-image {
+    width: 260%;
+    height: 120%;
+    object-fit: contain;
+    transform: scale(1.15);
+  }
+  
+  /* Text */
+  .design-title {
+    margin-top: 1rem;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  
+  .design-font {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Actions */
+  .like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .like-button:hover:not(:disabled) {
+    transform: scale(1.15);
+  }
+  
+  .like-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  
+  /* Admin delete */
+  .delete-button {
+    background: #ffefef;
+    border: 1px solid #ffb3b3;
+    color: #c40000;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+  }
+  
+  .delete-button:hover {
+    background: #ffd6d6;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .designs-page {
+      padding: 1.5rem 1rem;
+    }
+  
+    .designs-grid {
+      gap: 1.25rem;
+    }
+  }
