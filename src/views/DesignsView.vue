@@ -127,7 +127,7 @@ async function likeDesign(design) {
   }
 
   const res = await fetch(
-    `https://lays-api-dh74.onrender.com//designs/${design._id}/like`,
+    `https://lays-api-dh74.onrender.com/designs/${design._id}/like`,
     {
       method: 'POST',
       headers: {
