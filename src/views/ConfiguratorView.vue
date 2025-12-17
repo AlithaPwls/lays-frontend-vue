@@ -230,7 +230,7 @@ window.addEventListener('message', async (event) => {
   image: screenshot.value
 }
 
-  const res = await fetch('https://lays-api-dh74.onrender.com//designs', {
+  const res = await fetch('https://lays-api-dh74.onrender.com/designs', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
