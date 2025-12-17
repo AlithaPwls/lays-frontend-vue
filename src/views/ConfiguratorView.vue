@@ -49,12 +49,14 @@
           </div>
   
           <div v-if="currentStep === 2" class="step">
+            <h2>Name your Title</h2>
+            <input type="text" v-model="config.title" />
+  
+
             <h2>Name your flavor</h2>
             <input type="text" v-model="config.flavor" />
 
-            <h2>Name your flavor</h2>
-            <input type="text" v-model="config.title" />
-  
+           
             <div class="nav">
               <button @click="prevStep">← Back</button>
               <button :disabled="!config.title" @click="nextStep">Next →</button>
