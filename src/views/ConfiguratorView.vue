@@ -31,7 +31,7 @@
         <div class="preview-column">
           <iframe
             ref="threeFrame"
-            src="https://lays-api-dh74.onrender.com/"
+            src="http://localhost:5174"
             class="preview-iframe"
             @load="iframeReady = true"
           ></iframe>
