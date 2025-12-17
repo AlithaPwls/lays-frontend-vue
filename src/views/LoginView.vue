@@ -45,7 +45,7 @@
   
   async function login() {
     try {
-      const res = await fetch('http://localhost:3000/auth/login', {
+      const res = await fetch('https://lays-api-dh74.onrender.com//auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

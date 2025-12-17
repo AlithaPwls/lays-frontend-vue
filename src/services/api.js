@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000'
+const API_URL = 'https://lays-api-dh74.onrender.com/'
 
 export async function getColors() {
   const response = await fetch(`${API_URL}/colors`)

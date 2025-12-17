@@ -31,7 +31,7 @@
         <div class="preview-column">
           <iframe
             ref="threeFrame"
-            src="http://localhost:5174"
+            src="https://lays-api-dh74.onrender.com/"
             class="preview-iframe"
             @load="iframeReady = true"
           ></iframe>
@@ -230,7 +230,7 @@ window.addEventListener('message', async (event) => {
   image: screenshot.value
 }
 
-  const res = await fetch('http://localhost:3000/designs', {
+  const res = await fetch('https://lays-api-dh74.onrender.com//designs', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

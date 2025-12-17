@@ -76,7 +76,7 @@
       return
     }
 
-    const res = await fetch('http://localhost:3000/designs', {
+    const res = await fetch('https://lays-api-dh74.onrender.com//designs', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -127,7 +127,7 @@ async function likeDesign(design) {
   }
 
   const res = await fetch(
-    `http://localhost:3000/designs/${design._id}/like`,
+    `https://lays-api-dh74.onrender.com//designs/${design._id}/like`,
     {
       method: 'POST',
       headers: {
@@ -152,7 +152,7 @@ async function deleteDesign(designId) {
   if (!confirmed) return
 
   const res = await fetch(
-    `http://localhost:3000/designs/${designId}`,
+    `https://lays-api-dh74.onrender.com//designs/${designId}`,
     {
       method: 'DELETE',
       headers: {
