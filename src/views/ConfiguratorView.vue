@@ -31,7 +31,7 @@
         <div class="preview-column">
           <iframe
             ref="threeFrame"
-            src="http://localhost:5174"
+            src="https://lays-configurator-tjs.vercel.app/"
             class="preview-iframe"
             @load="iframeReady = true"
           ></iframe>
