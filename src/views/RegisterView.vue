@@ -48,8 +48,19 @@
   
   async function handleRegister() {
   try {
-    await register(firstname.value, lastname.value, email.value, password.value)
-    router.push('/login')
+    const res = await register(
+      firstname.value,
+      lastname.value,
+      email.value,
+      password.value
+    )
+
+    // 🔐 opslaan zoals bij login
+    localStorage.setItem('token', res.token)
+    localStorage.setItem('user', JSON.stringify(res.user))
+
+    // 👉 ga naar configurator
+    router.push('/configurator')
   } catch (err) {
     alert('Register failed')
   }
