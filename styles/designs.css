@@ -1,140 +1,193 @@
-/* ===============================
-   DESIGNS PAGE (SEPARATE STYLES)
-   =============================== */
+/* =========================
+   COLOR VARIABLES
+========================= */
 
-   .designs-page {
-    max-width: 1200px;
+:root {
+    --bg-main: #f7f6f3;
+    --card-bg: #ffffff;
+    --accent: #f5b301;       /* Lays geel */
+    --accent-dark: #d89a00;
+    --text-main: #121212;
+    --text-muted: #777;
+    --border-soft: #e5e5e5;
+    --danger: #e54848;
+  }
+  
+  /* =========================
+     BASE
+  ========================= */
+  
+  .designs-page {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 2.5rem 1.5rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 3rem 2rem 4rem;
+    background: var(--bg-main);
+    min-height: 100vh;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-main);
   }
   
-  .designs-page h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
+  /* =========================
+     HEADER
+  ========================= */
   
-  /* Back link */
   .back-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     margin-bottom: 1.5rem;
-    color: #111;
+    font-size: 0.9rem;
+    color: var(--text-muted);
     text-decoration: none;
-    font-weight: 500;
   }
   
   .back-link:hover {
-    text-decoration: underline;
+    color: var(--text-main);
   }
   
-  /* Status text */
+  .designs-page h1 {
+    font-size: clamp(2.1rem, 3vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+  }
+  
+  /* =========================
+     STATUS
+  ========================= */
+  
   .status {
     text-align: center;
-    margin-top: 3rem;
-    color: #666;
-    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 6rem;
+    font-size: 1rem;
   }
   
-  /* Grid */
+  /* =========================
+     GRID
+  ========================= */
+  
   .designs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2.5rem;
   }
   
-  /* Card */
+  /* =========================
+     CARD
+  ========================= */
+  
   .design-card {
-    background: #fff;
-    border-radius: 14px;
+    background: var(--card-bg);
+    border-radius: 22px;
     overflow: hidden;
-    border: 1px solid #eee;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.06);
   }
   
   .design-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.12);
   }
   
-  /* Image */
+  /* =========================
+     IMAGE
+  ========================= */
+  
   .design-image-wrapper {
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(135deg, #f4f4f4, #eaeaea);
+    background: linear-gradient(135deg, #fff6da, #ffe8a6);
+    height: 230px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    padding: 1rem;
   }
   
   .design-image {
-    width: 260%;
-    height: 120%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    transform: scale(1.15);
   }
   
-  /* Text */
+  /* =========================
+     CONTENT
+  ========================= */
+  
   .design-title {
-    margin-top: 1rem;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 1.2rem 1.2rem 0.2rem;
     text-align: center;
   }
   
   .design-font {
     font-size: 0.85rem;
-    color: #777;
-    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 1rem;
   }
   
-  /* Actions */
+  /* =========================
+     ACTIONS
+  ========================= */
+  
   .like-button {
-    background: none;
+    margin: 0 auto 1.2rem;
+    background: var(--accent);
+    color: #000;
     border: none;
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
-    transition: transform 0.2s ease;
   }
   
   .like-button:hover:not(:disabled) {
-    transform: scale(1.15);
+    background: var(--accent-dark);
+    transform: scale(1.05);
   }
   
   .like-button:disabled {
-    opacity: 0.35;
+    opacity: 0.45;
     cursor: not-allowed;
   }
   
-  /* Admin delete */
+  /* =========================
+     DELETE (ADMIN)
+  ========================= */
+  
   .delete-button {
-    background: #ffefef;
-    border: 1px solid #ffb3b3;
-    color: #c40000;
-    font-size: 0.85rem;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
+    margin: 0 auto 1.4rem;
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid rgba(229, 72, 72, 0.4);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
     cursor: pointer;
-    margin-bottom: 1rem;
-
+    transition: all 0.25s ease;
   }
   
   .delete-button:hover {
-    background: #ffd6d6;
+    background: var(--danger);
+    color: #fff;
   }
   
-  /* Responsive */
+  /* =========================
+     RESPONSIVE
+  ========================= */
+  
   @media (max-width: 600px) {
     .designs-page {
-      padding: 1.5rem 1rem;
+      padding: 2rem 1.2rem 3rem;
     }
   
     .designs-grid {
-      gap: 1.25rem;
+      gap: 1.8rem;
     }
   }

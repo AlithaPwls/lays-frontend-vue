@@ -88,6 +88,9 @@ body {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 3rem;
   align-items: start;
+  padding: 3em;
+  background-color: rgba(246, 255, 0, 0.245);
+  border-radius: 15px;
 }
 
 /* ===============================
@@ -95,10 +98,8 @@ body {
 ================================ */
 
 .preview-column {
-  background: linear-gradient(145deg, #ffffff, #f0f1f6);
   border-radius: 18px;
   padding: 1.5rem;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
 }
 
 .preview-iframe {

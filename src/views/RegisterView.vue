@@ -5,6 +5,9 @@
         <p class="auth-subtitle">
           Create an account to save your designs
         </p>
+
+        <input type="text" placeholder="First name" v-model="firstname">
+        <input type="text" placeholder="Last name" v-model="lastname">
   
         <input
           type="email"
@@ -36,13 +39,16 @@
   import { register } from '../services/auth'
   import { useRouter } from 'vue-router'
   
+  const firstname = ref('')
+  const lastname = ref('')
   const email = ref('')
   const password = ref('')
+
   const router = useRouter()
   
   async function handleRegister() {
   try {
-    await register(email.value, password.value)
+    await register(firstname.value, lastname.value, email.value, password.value)
     router.push('/login')
   } catch (err) {
     alert('Register failed')

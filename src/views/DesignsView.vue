@@ -39,7 +39,7 @@
           </h3>
   
           <p class="design-font">
-        {{ design.userId.email }}
+        {{ design.userId.firstname }} {{ design.userId.lastname }}
         </p>
           <button
   class="like-button"
