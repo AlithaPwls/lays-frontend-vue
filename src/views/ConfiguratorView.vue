@@ -50,6 +50,9 @@
   
           <div v-if="currentStep === 2" class="step">
             <h2>Name your flavor</h2>
+            <input type="text" v-model="config.flavor" />
+
+            <h2>Name your flavor</h2>
             <input type="text" v-model="config.title" />
   
             <div class="nav">
@@ -118,6 +121,7 @@
   const config = ref({
     color: null,
     title: '',
+    flavor: '',
     font: null
   })
   
@@ -163,6 +167,18 @@
       }
     }
   )
+
+  watch(
+  () => config.value.flavor,
+  (val) => {
+    if (iframeReady.value && val) {
+      threeFrame.value.contentWindow.postMessage(
+        { type: 'SET_FLAVOR', flavor: val },
+        '*'
+      )
+    }
+  }
+)
   
   watch(
     () => config.value.font,
@@ -205,11 +221,12 @@ window.addEventListener('message', async (event) => {
   const token = localStorage.getItem('token')
 
   const payload = {
-    title: config.value.title,
-    color: config.value.color,
-    font: config.value.font.name,
-    image: screenshot.value
-  }
+  title: config.value.title,
+  flavor: config.value.flavor,
+  color: config.value.color,
+  font: config.value.font.name,
+  image: screenshot.value
+}
 
   const res = await fetch('http://localhost:3000/designs', {
     method: 'POST',
