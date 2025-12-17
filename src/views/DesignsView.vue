@@ -152,7 +152,7 @@ async function deleteDesign(designId) {
   if (!confirmed) return
 
   const res = await fetch(
-    `https://lays-api-dh74.onrender.com//designs/${designId}`,
+    `https://lays-api-dh74.onrender.com/designs/${designId}`,
     {
       method: 'DELETE',
       headers: {
