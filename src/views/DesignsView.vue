@@ -76,7 +76,7 @@
       return
     }
 
-    const res = await fetch('https://lays-api-dh74.onrender.com//designs', {
+    const res = await fetch('https://lays-api-dh74.onrender.com/designs', {
       headers: {
         Authorization: `Bearer ${token}`
       }
