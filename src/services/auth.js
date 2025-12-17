@@ -1,4 +1,4 @@
-const API_URL = 'https://lays-api-dh74.onrender.com/'
+const API_URL = 'https://lays-api-dh74.onrender.com'
 
 export async function register(firstname, lastname , email, password) {
   const res = await fetch(`${API_URL}/auth/register`, {
