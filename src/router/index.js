@@ -4,6 +4,7 @@ import ConfiguratorView from '../views/ConfiguratorView.vue'
 import DesignsView from '../views/DesignsView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import AdminView from './views/AdminView.vue'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: RegisterView
+  },
+  {
+   path: '/admin',
+    name: 'admin',
+    component: AdminView
   }
 ]
 
