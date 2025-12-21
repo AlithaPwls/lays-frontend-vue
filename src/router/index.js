@@ -4,7 +4,7 @@ import ConfiguratorView from '../views/ConfiguratorView.vue'
 import DesignsView from '../views/DesignsView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
-import AdminView from './views/AdminView.vue'
+import AdminView from '../views/AdminView.vue'
 
 const routes = [
   {
