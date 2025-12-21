@@ -5,6 +5,13 @@
       </router-link>
   
       <h1>All designs</h1>
+
+      <router-link
+        v-if="isAdmin()"
+        to="/admin"
+        class="admin-link">
+        ⚙️ Admin panel
+      </router-link>
   
       <div v-if="loading" class="status">
         Loading designs…
