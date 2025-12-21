@@ -1,7 +1,7 @@
 <template>
     <div class="admin-page">
       <h1>Admin panel</h1>
-      <p>Only admins can see this page.</p>
+      <p>Only ADMINS can see this page.</p>
     </div>
   </template>
   
