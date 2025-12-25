@@ -198,9 +198,11 @@
   const token = localStorage.getItem('token')
 
   if (!token) {
-    showAuthModal.value = true
+    alert('Please log in to create and save your design')
+    window.location.href = '/login'
     return
   }
+
 
   if (!iframeReady.value || !threeFrame.value) return
 
@@ -210,6 +212,7 @@
   threeFrame.value.contentWindow.postMessage(
     { type: 'GET_SCREENSHOT' },
     '*'
+
   )
 }
   
