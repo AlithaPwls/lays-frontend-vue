@@ -12,6 +12,7 @@
         class="admin-link">
         ⚙️ Admin panel
       </router-link>
+
   
       <div v-if="loading" class="status">
         Loading designs…
