@@ -2,6 +2,12 @@
   <div class="admin-page">
     <h1>Admin panel</h1>
 
+    <router-link
+        to="/designs"
+        class="admin-link">
+        ← Back to designs
+      </router-link>
+
     <p v-if="loading">Loading users…</p>
 
     <table v-else class="users-table">

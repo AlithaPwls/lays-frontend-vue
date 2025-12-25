@@ -4,7 +4,7 @@
       <!-- HEADER -->
       <header class="config-header">
         <router-link to="/designs" class="top-link">
-          View all designs
+          ← View all designs
         </router-link>
   
         <h1 class="config-title">Lays Chips Configurator</h1>
