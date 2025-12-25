@@ -1,5 +1,5 @@
 <template>
     <div>
-      ADMIN VIEW WERKT
+      ADMIN VIEW WERKT  
     </div>
   </template>
