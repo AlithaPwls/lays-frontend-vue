@@ -134,4 +134,23 @@ async function deleteUser(userId) {
   padding: 6px 12px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 20px;
+  }
+
+  .users-table {
+    font-size: 14px;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 8px;
+  }
+
+  .delete-btn {
+    padding: 4px 8px;
+  }
+}
 </style>
